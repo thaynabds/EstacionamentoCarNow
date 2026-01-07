@@ -29,3 +29,55 @@ Pré-requisitos
 VS Code (opcional)
 
 Git (opcional)
+
+🎮 Como Usar
+Ao iniciar o programa, você verá um menu com 5 opções:
+
+1 - Cadastrar veículo
+
+2 - Remover veículo
+
+3 - Listar veículos
+
+4 - Configurar preços
+
+5 - Sair
+
+Para cadastrar um veículo:
+
+Escolha a opção 1
+
+Digite a placa do veículo
+
+O sistema confirmará o cadastro
+
+Para remover um veículo:
+
+Escolha a opção 2
+
+Digite a placa do veículo
+
+Informe quantas horas o veículo ficou estacionado
+
+O sistema mostrará um recibo com o valor a pagar
+
+Para listar veículos:
+
+Escolha a opção 3
+
+Veja todos os veículos atualmente estacionados
+
+Para configurar preços:
+
+Escolha a opção 4
+
+Altere o preço inicial e/ou o preço por hora
+
+📊 Funcionalidades
+✅ Cadastro de veículos com validação de placa
+✅ Remoção com cálculo automático do valor a pagar
+✅ Listagem completa dos veículos estacionados
+✅ Configuração flexível de preços
+✅ Interface intuitiva via terminal
+✅ Validações para entradas inválidas
+✅ Recibo detalhado na saída do veículo
