@@ -1,0 +1,194 @@
+📝 Código Completo
+Program.cs
+
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    private static List<string> veiculos = new List<string>();
+    private static decimal precoInicial = 5.00m;
+    private static decimal precoPorHora = 2.00m;
+
+    static void Main()
+    {
+        Console.WriteLine("Bem-vindo ao Sistema de Estacionamento!");
+        Console.WriteLine("=======================================\n");
+        
+        MostrarMenu();
+    }
+
+    static void MostrarMenu()
+    {
+        bool continuar = true;
+        
+        while (continuar)
+        {
+            Console.WriteLine("\n=== MENU PRINCIPAL ===");
+            Console.WriteLine("1 - Cadastrar veículo");
+            Console.WriteLine("2 - Remover veículo");
+            Console.WriteLine("3 - Listar veículos");
+            Console.WriteLine("4 - Configurar preços");
+            Console.WriteLine("5 - Sair");
+            Console.Write("\nDigite sua opção: ");
+            
+            string opcao = Console.ReadLine();
+            
+            switch (opcao)
+            {
+                case "1":
+                    CadastrarVeiculo();
+                    break;
+                case "2":
+                    RemoverVeiculo();
+                    break;
+                case "3":
+                    ListarVeiculos();
+                    break;
+                case "4":
+                    ConfigurarPrecos();
+                    break;
+                case "5":
+                    continuar = false;
+                    Console.WriteLine("\nSistema encerrado. Até logo!");
+                    break;
+                default:
+                    Console.WriteLine("\nOpção inválida! Tente novamente.");
+                    break;
+            }
+        }
+    }
+
+    static void CadastrarVeiculo()
+    {
+        Console.Clear();
+        Console.WriteLine("=== CADASTRAR VEÍCULO ===\n");
+        Console.Write("Digite a placa do veículo: ");
+        string placa = Console.ReadLine().ToUpper();
+        
+        if (string.IsNullOrWhiteSpace(placa))
+        {
+            Console.WriteLine("\nPlaca inválida!");
+            return;
+        }
+        
+        if (veiculos.Contains(placa))
+        {
+            Console.WriteLine($"\nVeículo com placa {placa} já está estacionado!");
+            return;
+        }
+        
+        veiculos.Add(placa);
+        Console.WriteLine($"\n✓ Veículo {placa} cadastrado com sucesso!");
+        Console.WriteLine($"Hora de entrada: {DateTime.Now:HH:mm}");
+    }
+
+    static void RemoverVeiculo()
+    {
+        Console.Clear();
+        Console.WriteLine("=== REMOVER VEÍCULO ===\n");
+        
+        if (veiculos.Count == 0)
+        {
+            Console.WriteLine("Não há veículos estacionados para remover.");
+            return;
+        }
+        
+        Console.Write("Digite a placa do veículo: ");
+        string placa = Console.ReadLine().ToUpper();
+        
+        if (!veiculos.Contains(placa))
+        {
+            Console.WriteLine($"\nVeículo com placa {placa} não encontrado!");
+            Console.WriteLine("Confira a lista de veículos estacionados.");
+            return;
+        }
+        
+        Console.Write("Quantas horas o veículo permaneceu estacionado? ");
+        
+        if (!int.TryParse(Console.ReadLine(), out int horas) || horas < 0)
+        {
+            Console.WriteLine("\nQuantidade de horas inválida!");
+            return;
+        }
+        
+        decimal valorTotal = precoInicial + (precoPorHora * horas);
+        
+        Console.WriteLine("\n" + new string('=', 40));
+        Console.WriteLine("RECIBO DE ESTACIONAMENTO");
+        Console.WriteLine(new string('=', 40));
+        Console.WriteLine($"Placa do veículo: {placa}");
+        Console.WriteLine($"Hora de saída: {DateTime.Now:HH:mm}");
+        Console.WriteLine($"Tempo estacionado: {horas} hora(s)");
+        Console.WriteLine($"Preço inicial: R$ {precoInicial:F2}");
+        Console.WriteLine($"Preço por hora: R$ {precoPorHora:F2}");
+        Console.WriteLine(new string('-', 40));
+        Console.WriteLine($"VALOR TOTAL: R$ {valorTotal:F2}");
+        Console.WriteLine(new string('=', 40));
+        
+        veiculos.Remove(placa);
+        Console.WriteLine($"\n✓ Veículo {placa} removido com sucesso!");
+    }
+
+    static void ListarVeiculos()
+    {
+        Console.Clear();
+        Console.WriteLine("=== VEÍCULOS ESTACIONADOS ===\n");
+        
+        if (veiculos.Count == 0)
+        {
+            Console.WriteLine("Nenhum veículo estacionado no momento.");
+            return;
+        }
+        
+        Console.WriteLine($"Total de veículos: {veiculos.Count}\n");
+        
+        for (int i = 0; i < veiculos.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {veiculos[i]}");
+        }
+    }
+
+    static void ConfigurarPrecos()
+    {
+        Console.Clear();
+        Console.WriteLine("=== CONFIGURAR PREÇOS ===\n");
+        
+        Console.WriteLine($"Preço atual inicial: R$ {precoInicial:F2}");
+        Console.Write("Novo preço inicial: R$ ");
+        
+        if (decimal.TryParse(Console.ReadLine(), out decimal novoInicial) && novoInicial >= 0)
+        {
+            precoInicial = novoInicial;
+            Console.WriteLine($"✓ Preço inicial atualizado para R$ {precoInicial:F2}");
+        }
+        else
+        {
+            Console.WriteLine("Valor inválido! Preço não alterado.");
+        }
+        
+        Console.WriteLine($"\nPreço atual por hora: R$ {precoPorHora:F2}");
+        Console.Write("Novo preço por hora: R$ ");
+        
+        if (decimal.TryParse(Console.ReadLine(), out decimal novoHora) && novoHora >= 0)
+        {
+            precoPorHora = novoHora;
+            Console.WriteLine($"✓ Preço por hora atualizado para R$ {precoPorHora:F2}");
+        }
+        else
+        {
+            Console.WriteLine("Valor inválido! Preço não alterado.");
+        }
+    }
+}
+
+estacionamento.csproj
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>
+
